@@ -115,9 +115,58 @@ compact 会将每条 css 规则归纳为一行。嵌套过的选择器在输出�
 
 ## <center> :compressed</center>
 
-compressed会删除所有无意义的空格、空白行、以及注释，力求将文件体积压缩到最小，同时也会做出其他调整，比如会自动替换占用空间最小的颜色表达方式。
+compressed 会删除所有无意义的空格、空白行、以及注释，力求将文件体积压缩到最小，同时也会做出其他调整，比如会自动替换占用空间最小的颜色表达方式。
 
 ```
 #main{color:#fff;background-color:#000}#main p{width:10em}.p{font-size:10em;font-weight:bold;text-decoration:underline}
 
 ```
+
+# 功能
+
+- “+” “-” “\*” “/”运算符
+- 流程控制： @if、@for、@each、@while
+- @media 媒体查询
+- @mixin 混入
+
+```
+// 定义块元素内边距
+@mixin block-padding($top, $right, $bottom, $left) {
+    padding-top: $top;
+    padding-right: $right;
+    padding-bottom: $bottom;
+    padding-left: $left;
+}
+
+// 按照参数顺序赋值
+.container1 {
+   @include block-padding(10px, 20px, 30px, 40px);
+}
+
+// 可指定参数赋值
+.container2 {
+   @include block-padding($left: 20px, $top: 10px, $bottom: 10px, $right: 30px);
+}
+
+// 可指定参数赋值，但是必须指定4个值，不能缺失
+.container3 {
+   @include block-padding($left: 10px, $top: 10px, $bottom: 0, $right: 0);
+}
+```
+
+- @function (@function 用于封装复杂的操作，可以很容易地以一种可读的方式抽象出通用公式和行为，函数提供返回值，常用来做计算方面的工作)
+
+```
+@function square($base) {
+    @return $base * $base * 1px;
+}
+
+.sidebar {
+    float: left;
+    margin-left: square(4);
+}
+
+```
+
+
++ @extend继承
